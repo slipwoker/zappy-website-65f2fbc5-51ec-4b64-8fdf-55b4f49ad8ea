@@ -1,0 +1,708 @@
+<!DOCTYPE html><html lang="he" dir="rtl"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>פרויקטים - אדם המקצועי</title>
+  <meta name="description" content="Projects - אדם המקצועי provides professional שיפוצים ובנייה services. Specializing in שיפוצים.">
+  <meta name="keywords" content="שיפוצים, שיפוץ דירה מחיר למשפחות, קבלן שיפוצים מקצועי בישראל, שיפוץ דירה לפני כניסה, שיפוצים">
+  <meta name="robots" content="index, follow">
+  
+  <meta property="og:title" content="פרויקטים - אדם המקצועי">
+  <meta property="og:description" content="Projects - אדם המקצועי provides professional שיפוצים ובנייה services. Specializing in שיפוצים.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="פרויקטים - אדם המקצועי">
+  <meta name="twitter:description" content="Projects - אדם המקצועי provides professional שיפוצים ובנייה services. Specializing in שיפוצים.">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+<!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '65f2fbc5-51ec-4b64-8fdf-55b4f49ad8ea',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: transparent !important; border: none !important; cursor: pointer !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+</head>
+<body>
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  
+  <button class="phone-header-btn" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+  
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/business-logo.webp" alt="אדם המקצועי" class="logo" />
+      </a>
+    </div>
+    
+    <ul class="nav-menu" id="navMenu"><li><a href="/services">שירותים</a></li><li><a href="/projects">פרויקטים</a></li></ul>
+    
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">צור קשר</a>
+    </div>
+  </div>
+</nav>
+  
+  <main>
+    <section class="projects-page-intro-section" data-layout-spec="Projects-page-intro">
+  <div class="projects-page-intro-container">
+    <div class="projects-page-intro-text-wrapper">
+      <h1 class="projects-page-intro-title">עבודות שיפוץ אחרונות</h1>
+      <div class="projects-page-intro-title-underline"></div>
+      <p class="projects-page-intro-description">חללים אמיתיים, החלטות מעשיות וגימור נקי—דוגמאות שמראות איך אנחנו מתכננים ומבצעים שיפוצים בצורה מקצועית ושקופה.</p>
+    </div>
+    <div class="projects-page-intro-image-wrapper">
+      <img data-placeholder="projects-page-intro-image-1" data-context="Bright modern finished kitchen or living room space in Israeli home, showing professional renovation work with clean lines, white cabinetry, natural lighting, and quality finishing touches. Professional photography style for construction/renovation portfolio." width="1200" height="600" src="/assets/site-projects-page-intro-image-1.webp" alt="חלל מגורים מושלם לאחר שיפוץ מקצועי">
+    </div>
+  </div>
+  <div class="projects-page-intro-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="blueprint-grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(29,97,167,0.12)" stroke-width="0.5"></path>
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="1200" height="60" fill="url(#blueprint-grid)" opacity="0.5"></rect>
+      <path d="M0,60 L0,25 L400,35 L800,15 L1200,30 L1200,60 Z" fill="#EEF2F6"></path>
+      <line x1="0" y1="25" x2="1200" y2="30" stroke="#1D61A7" stroke-width="1" opacity="0.6"></line>
+    </svg>
+  </div>
+</section>
+
+<section class="projects-portfolio-section" data-layout-spec="Projects-portfolio">
+  <div class="projects-portfolio-container">
+    <header class="projects-portfolio-header">
+      <h2 class="projects-portfolio-title">פרויקטים שהשלמנו</h2>
+      <div class="projects-portfolio-title-underline"></div>
+    </header>
+
+    <div class="projects-portfolio-grid">
+      <!-- Project 1 -->
+      <article class="projects-portfolio-item">
+        <div class="projects-portfolio-image-wrapper">
+          <img data-placeholder="projects-portfolio-kitchen-1" data-context="Professional kitchen renovation before-and-after result for Israeli construction business, modern white cabinets, new countertops, updated appliances, bright clean finish" width="600" height="400" src="/assets/site-projects-portfolio-kitchen-1.webp" alt="שיפוץ מטבח מקצועי - תוצאות לפני ואחרי">
+        </div>
+        <div class="projects-portfolio-caption">
+          <h3 class="projects-portfolio-caption-title">שיפוץ מטבח מלא</h3>
+          <p class="projects-portfolio-caption-text">פתרון לבעיית פריסה לא יעילה - הוספנו אחסון חכם ושיפרנו את זרימת העבודה במטבח</p>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="projects-portfolio-item">
+        <div class="projects-portfolio-image-wrapper">
+          <img data-placeholder="projects-portfolio-bathroom-1" data-context="Modern bathroom renovation for Israeli construction company, new tiles, updated fixtures, waterproofing solution, clean contemporary design" width="600" height="400" src="/assets/site-projects-portfolio-bathroom-1.webp" alt="שיפוץ חדר אמבטיה - אטימה ועיצוב מודרני">
+        </div>
+        <div class="projects-portfolio-caption">
+          <h3 class="projects-portfolio-caption-title">חדר אמבטיה חדש</h3>
+          <p class="projects-portfolio-caption-text">פתרון לבעיית איטום וחדירת מים - ביצענו אטימה מלאה עם חומרים איכוtiים ועיצוב עדכני</p>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="projects-portfolio-item">
+        <div class="projects-portfolio-image-wrapper">
+          <img data-placeholder="projects-portfolio-flooring-1" data-context="Professional flooring installation for Israeli renovation business, new wood-look tiles or laminate, clean finish, modern Israeli apartment" width="600" height="400" src="/assets/site-projects-portfolio-flooring-1.webp" alt="התקנת ריצוף חדש - פרקט ואריחים">
+        </div>
+        <div class="projects-portfolio-caption">
+          <h3 class="projects-portfolio-caption-title">ריצוף מושלם</h3>
+          <p class="projects-portfolio-caption-text">פתרון לרצפה בלויה ולא אחידה - התקנו ריצוף חדש עם איטום מלא וגימור מדויק</p>
+        </div>
+      </article>
+
+      <!-- Project 4 -->
+      <article class="projects-portfolio-item">
+        <div class="projects-portfolio-image-wrapper">
+          <img data-placeholder="projects-portfolio-painting-1" data-context="Professional interior painting renovation for Israeli construction business, fresh white walls, clean finish, modern apartment" width="600" height="400" src="/assets/site-projects-portfolio-painting-1.webp" alt="צביעת דירה מקצועית - גימור מושלם">
+        </div>
+        <div class="projects-portfolio-caption">
+          <h3 class="projects-portfolio-caption-title">צביעה מקצועית</h3>
+          <p class="projects-portfolio-caption-text">פתרון לקירות פגומים ולא אחידים - הכנת משטח מושלמת וצביעה ברמה גבוהה</p>
+        </div>
+      </article>
+
+      <!-- Project 5 -->
+      <article class="projects-portfolio-item">
+        <div class="projects-portfolio-image-wrapper">
+          <img data-placeholder="projects-portfolio-builtin-1" data-context="Custom built-in closet installation for Israeli renovation business, modern white wardrobe, efficient storage solution, clean carpentry work" width="600" height="400" src="/assets/site-projects-portfolio-builtin-1.webp" alt="ארון בנייה מותאם אישית - פתרון אחסון">
+        </div>
+        <div class="projects-portfolio-caption">
+          <h3 class="projects-portfolio-caption-title">ארונות בנייה</h3>
+          <p class="projects-portfolio-caption-text">פתרון לחוסר מקום אחסון - תכננו וביצענו ארונות בנויים מותאמים אישית למרחב</p>
+        </div>
+      </article>
+
+      <!-- Project 6 -->
+      <article class="projects-portfolio-item">
+        <div class="projects-portfolio-image-wrapper">
+          <img data-placeholder="projects-portfolio-kitchen-2" data-context="Small kitchen renovation for Israeli construction company, space-saving solutions, modern compact design, efficient layout" width="600" height="400" src="/assets/site-projects-portfolio-kitchen-2.webp" alt="שיפוץ מטבח קטן - ניצול מרחב מקסימלי">
+        </div>
+        <div class="projects-portfolio-caption">
+          <h3 class="projects-portfolio-caption-title">מטבח קטן ויעיל</h3>
+          <p class="projects-portfolio-caption-text">פתרון למטבח צפוף - תכנון חכם שמקסם כל סנטימטר ויוצר תחושת מרחב</p>
+        </div>
+      </article>
+
+      <!-- Project 7 -->
+      <article class="projects-portfolio-item">
+        <div class="projects-portfolio-image-wrapper">
+          <img data-placeholder="projects-portfolio-bathroom-2" data-context="Master bathroom renovation for Israeli construction business, luxury finish, modern fixtures, spa-like design, quality materials" width="600" height="400" src="/assets/site-projects-portfolio-bathroom-2.webp" alt="חדר רחצה הורים - עיצוב יוקרתי">
+        </div>
+        <div class="projects-portfolio-caption">
+          <h3 class="projects-portfolio-caption-title">חדר רחצה הורים</h3>
+          <p class="projects-portfolio-caption-text">פתרון לחדר אמבטיה מיושן - שדרוג מלא עם חומרים איכותיים ותכנון ארגונומי</p>
+        </div>
+      </article>
+
+      <!-- Project 8 -->
+      <article class="projects-portfolio-item">
+        <div class="projects-portfolio-image-wrapper">
+          <img data-placeholder="projects-portfolio-living-room" data-context="Living room renovation for Israeli construction company, modern design, new flooring, fresh paint, updated lighting, clean contemporary finish" width="600" height="400" src="/assets/site-projects-portfolio-living-room.webp" alt="שיפוץ סלון - עיצוב מודרני ונקי">
+        </div>
+        <div class="projects-portfolio-caption">
+          <h3 class="projects-portfolio-caption-title">סלון מרווח</h3>
+          <p class="projects-portfolio-caption-text">פתרון לחלל לא מנוצל - פריצת קיר והרחבת המרחב עם גימור איכותי</p>
+        </div>
+      </article>
+
+      <!-- Project 9 -->
+      <article class="projects-portfolio-item">
+        <div class="projects-portfolio-image-wrapper">
+          <img data-placeholder="projects-portfolio-balcony" data-context="Balcony renovation for Israeli construction business, weatherproof flooring, updated railing, enclosed space, practical Israeli design" width="600" height="400" src="/assets/site-projects-portfolio-balcony.webp" alt="שיפוץ מרפסת - סגירה ואיטום">
+        </div>
+        <div class="projects-portfolio-caption">
+          <h3 class="projects-portfolio-caption-title">מרפסת סגורה</h3>
+          <p class="projects-portfolio-caption-text">פתרון למרפסת חשופה - סגירה מלאה עם איטום מושלם והפיכה לחלל שימושי</p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- Bottom Divider -->
+  <div class="projects-portfolio-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="projects-portfolio-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1"></stop>
+          <stop offset="50%" style="stop-color:#F9FAFB;stop-opacity:1"></stop>
+          <stop offset="100%" style="stop-color:#F5F3F0;stop-opacity:1"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M0,60 L0,0 L400,0 L400,20 L800,20 L800,0 L1200,0 L1200,60 Z" fill="url(#projects-portfolio-gradient)"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="projects-case-studies-section" data-layout-spec="Projects-case-studies">
+  <div class="projects-case-studies-container">
+    <div class="case-study-block">
+      <div class="case-study-content">
+        <h2 class="case-study-title">שיפוץ דירה מקיף תוך 30 יום</h2>
+        <div class="case-study-text">
+          <p><strong>המצב:</strong> משפחה צעירה רכשה דירת 4 חדרים במצב מוזנח, עם לוח זמנים קצר לפני המעבר. הדרישה הייתה שיפוץ כולל שכולל החלפת רצפות, צביעה מלאה, שדרוג מטבח וחידוש שני חדרי רחצה – הכל תוך חודש אחד.</p>
+          <p><strong>הגישה:</strong> בנינו תכנית עבודה מפורטת עם צוותים מקבילים. התחלנו בעבודות ההריסה והתשתיות, המשכנו בהתקנת רצפות קרמיקה איכוتיות ובצביעה מקצועית בגוונים בהירים, וסיימנו בהתקנת אביזרים ותאורה. תיאום הדוק עם הלקוח הבטיח שכל שלב עומד בציפיות.</p>
+          <p><strong>התוצאה:</strong> הדירה נמסרה בדיוק במועד, עם גימור מושלם ולקוחות מרוצים שקיבלו בית מוכן למגורים מיידיים. הפרויקט הפך לאחת ממקרי הבוחן המרשימים שלנו בניהול זמנים.</p>
+        </div>
+      </div>
+      <div class="case-study-image-wrapper">
+        <div class="case-study-backplate"></div>
+        <img data-placeholder="projects-case-studies-image-1" data-context="Modern renovated Israeli apartment living room with white walls, light ceramic floor tiles, recessed lighting, and contemporary furniture. Bright, clean, and professional finish showing completed renovation work by a construction company. Natural daylight, minimalist style, showing quality craftsmanship" width="600" height="400" src="/assets/site-projects-case-studies-image-1.webp" alt="דירה משופצת - סלון מודרני ומואר" class="case-study-image">
+      </div>
+    </div>
+
+    <div class="case-study-block">
+      <div class="case-study-content">
+        <h2 class="case-study-title">שיפוץ חדר רחצה עם דגש על איטום ואוורור</h2>
+        <div class="case-study-text">
+          <p><strong>המצב:</strong> חדר רחצה ישן עם בעיות רטיבות חוזרות, ריצוף סדוק ומערכת אוורור לא תקינה. הלקוח חיפש פתרון ארוך טווח שימנע נזקי מים ויבטיח סביבה בריאה ונעימה.</p>
+          <p><strong>הגישה:</strong> ביצענו הריסה מלאה עד לקירות הגולמיים, טיפלנו בשכבות איטום מתקדמות (ממברנות איכותיות + בדיקות דליפה), התקנו מערכת אוורור חזקה עם שסתום חד-כיווני, והשתמשנו בחומרי גימור עמידים למים. הקפדנו על שיפועים נכונים לניקוז מושלם.</p>
+          <p><strong>התוצאה:</strong> חדר רחצה מודרני, יבש ומאוורר היטב, ללא כל סימני רטיבות או ריחות. הלקוח דיווח על שיפור משמעותי באיכות החיים, והפרויקט הפך לדוגמה למקצועיות שלנו בטיפול בבעיות מורכבות.</p>
+        </div>
+      </div>
+      <div class="case-study-image-wrapper">
+        <div class="case-study-backplate"></div>
+        <img data-placeholder="projects-case-studies-image-2" data-context="Renovated modern Israeli bathroom with white ceramic tiles, glass shower enclosure, wall-mounted toilet, chrome fixtures, and proper ventilation system. Clean, bright, professional finish showing waterproofing and quality construction work. Well-lit, minimalist design" width="600" height="400" src="/assets/site-projects-case-studies-image-2.webp" alt="חדר רחצה משופץ - עיצוב מודרני עם איטום מושלם" class="case-study-image">
+      </div>
+    </div>
+  </div>
+
+  <div class="projects-case-studies-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,60 L0,30 Q300,25 600,30 T1200,30 L1200,60 Z" fill="var(--bg-light)"></path>
+      <path d="M0,30 Q300,25 600,30 T1200,30" stroke="var(--border-light)" stroke-width="1" fill="none"></path>
+      <line x1="150" y1="30" x2="150" y2="24" stroke="var(--border-light)" stroke-width="1"></line>
+      <line x1="300" y1="27" x2="300" y2="21" stroke="var(--border-light)" stroke-width="1"></line>
+      <line x1="450" y1="29" x2="450" y2="23" stroke="var(--border-light)" stroke-width="1"></line>
+      <line x1="600" y1="30" x2="600" y2="24" stroke="var(--border-light)" stroke-width="1"></line>
+      <line x1="750" y1="29" x2="750" y2="23" stroke="var(--border-light)" stroke-width="1"></line>
+      <line x1="900" y1="28" x2="900" y2="22" stroke="var(--border-light)" stroke-width="1"></line>
+      <line x1="1050" y1="29" x2="1050" y2="23" stroke="var(--border-light)" stroke-width="1"></line>
+    </svg>
+  </div>
+</section>
+
+<section class="projects-reviews-section" data-layout-spec="Projects-reviews">
+  <div class="projects-reviews-container">
+    <h2 class="projects-reviews-title">מה הלקוחות שלנו אומרים</h2>
+    
+    <div class="projects-reviews-grid">
+      <div class="projects-review-card">
+        <p class="projects-review-quote">"עבודה מקצועית ברמה הגבוהה ביותר. אדם ואנשיו הגיעו בזמן, שמרו על ניקיון מושלם לאורך כל השיפוץ, והתוצאה עלתה על הציפיות. ממליצה בחום!"</p>
+        <p class="projects-review-attribution">— שרה כהן, תל אביב</p>
+      </div>
+      
+      <div class="projects-review-card">
+        <p class="projects-review-quote">"התקשורת עם אדם הייתה מצוינת מהרגע הראשון. הוא הסביר כל שלב, עמד בלוחות הזמנים, והקפיד על איכות גימור ללא פשרות. שיפוץ הדירה שלנו היה חלק!"</p>
+        <p class="projects-review-attribution">— דוד לוי, חיפה</p>
+      </div>
+      
+      <div class="projects-review-card">
+        <p class="projects-review-quote">"אמינות מלאה. אדם נתן לנו הצעת מחיר שקופה והוגנת, ולא היו הפתעות לא נעימות. העבודה בוצעה בדיוק כפי שהובטח, ואנחנו מאוד מרוצים מהתוצאה."</p>
+        <p class="projects-review-attribution">— מיכל אברהם, ירושלים</p>
+      </div>
+      
+      <div class="projects-review-card">
+        <p class="projects-review-quote">"שיפצנו את הדירה לפני כניסה והחוויה הייתה מעולה. אדם ידע לתת פתרונות יצירתיים לכל בעיה, והצוות שלו עבד בשקט ובמקצועיות. ממש כיף לעבוד איתו."</p>
+        <p class="projects-review-attribution">— יוסי מזרחי, רעננה</p>
+      </div>
+      
+      <div class="projects-review-card">
+        <p class="projects-review-quote">"הניקיון והסדר באתר העבודה היו מרשימים. כל יום בסוף העבודה הצוות ניקה אחריו, והדירה נשארה ראויה למגורים גם במהלך השיפוץ. זה חשוב במיוחד למשפחות עם ילדים."</p>
+        <p class="projects-review-attribution">— רונית גולן, פתח תקווה</p>
+      </div>
+      
+      <div class="projects-review-card">
+        <p class="projects-review-quote">"קבלן שיפוצים מקצועי שיודע את העבודה שלו לעומק. אדם הקשיב לרצונות שלנו, נתן עצות חכמות, וביצע את הכל בדיוק כמו שדיברנו. איכות גימור יוצאת דופן!"</p>
+        <p class="projects-review-attribution">— אלי שמעון, הרצליה</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="projects-reviews-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="blueprintDash" x="0" y="0" width="20" height="60" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="30" x2="12" y2="30" stroke="var(--border-light)" stroke-width="1" stroke-dasharray="8,4"></line>
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="1200" height="60" fill="var(--bg-light)"></rect>
+      <rect x="0" y="29" width="1200" height="2" fill="url(#blueprintDash)"></rect>
+      <line x1="0" y1="30" x2="180" y2="30" stroke="var(--primary)" stroke-width="2"></line>
+      <rect x="0" y="30" width="1200" height="30" fill="var(--bg-dark)"></rect>
+    </svg>
+  </div>
+</section>
+
+<section class="projects-cta-section" data-layout-spec="Projects-cta">
+  <div class="projects-cta-container">
+    <div class="projects-cta-content">
+      <h2 class="projects-cta-heading">רוצים תוצאה דומה בבית שלכם?</h2>
+      <p class="projects-cta-text">שתפו אותנו בפרטים הבסיסיים ונדריך אתכם בשלבים הבאים. תהליך שקוף, מקצועי ובלי הפתעות.</p>
+      <a href="/contact" class="projects-cta-button btn-primary">
+        <span>צרו קשר</span>
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      </a>
+    </div>
+    <div class="projects-cta-panel">
+      <h3 class="projects-cta-panel-title">מה כדאי לשלוח לנו:</h3>
+      <div class="projects-cta-panel-items">
+        <p class="projects-cta-panel-item"><i class="fas fa-check" aria-hidden="true"></i> סוג החלל (דירה, משרד, חנות)</p>
+        <p class="projects-cta-panel-item"><i class="fas fa-check" aria-hidden="true"></i> גודל משוער במ"ר</p>
+        <p class="projects-cta-panel-item"><i class="fas fa-check" aria-hidden="true"></i> היקף העבודות המבוקש</p>
+        <p class="projects-cta-panel-item"><i class="fas fa-check" aria-hidden="true"></i> מועדים רצויים</p>
+      </div>
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <div class="footer-column footer-about">
+        <img src="/assets/business-logo.webp" alt="אדם המקצועי" class="logo" />
+        <p class="footer-description">מומחים בשיפוצים ובנייה עם ניסיון של שנים. אנחנו כאן כדי להפוך את החזון שלכם למציאות.</p>
+      </div>
+      
+      <div class="footer-column footer-links">
+        <h3 class="footer-heading">קישורים מהירים</h3>
+        <ul class="footer-menu">
+          <li><a href="/services">שירותים</a></li>
+          <li><a href="/projects">פרויקטים</a></li>
+          <li><a href="/contact">צור קשר</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column footer-contact">
+        <h3 class="footer-heading">יצירת קשר</h3>
+        <ul class="contact-list">
+          <li>
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:[business_email]">[business_email]</a>
+          </li>
+          <li>
+            <i class="fas fa-phone"></i>
+            <a href="tel:[business_phone]">[business_phone]</a>
+          </li>
+          <li><a href="/"><i class="fas fa-map-marker-alt"></i>
+            <span>[business_address]</span></a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column footer-social">
+        <h3 class="footer-heading">עקבו אחרינו</h3>
+        <div class="social-links">
+          <a href="[facebook_handle]" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="[instagram_handle]" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="[whatsapp_handle]" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <a href="/privacy">מדיניות פרטיות</a>
+        <span class="separator">|</span>
+        <a href="/terms">תנאים והגבלות</a>
+        <span class="separator">|</span>
+        <a href="/accessibility">הצהרת נגישות</a>
+      </div>
+      <div class="footer-copyright">
+        <p>© 2026 אדם המקצועי. כל הזכויות שמורות.</p>
+      </div>
+      <div class="footer-attribution">
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution" rel="noopener noreferrer">Generated by Zappy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <script src="/script.js"></script>
+
+    <div data-integration="accessibility:toolbar"></div>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body></html>
