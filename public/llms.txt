@@ -1,43 +1,53 @@
-# Business — Generative Engine Optimization Map
+# אדם המקצועי — Generative Engine Optimization Map
+
+> A שיפוצים ובנייה business.
 
 ---
 
 ## Pages
 
 ### Home
-https://example.com
+https://adam-hamiktzoi.zappy5.app
 
 ### Services
-https://example.com/services
+https://adam-hamiktzoi.zappy5.app/services
 
 ### Projects
-https://example.com/projects
+https://adam-hamiktzoi.zappy5.app/projects
 
 ### Contact
-https://example.com/contact
+https://adam-hamiktzoi.zappy5.app/contact
 
 ## Legal & Policy
 
 ### Privacy Policy
-https://example.com/privacy
+https://adam-hamiktzoi.zappy5.app/privacy
 Information about how user data is collected, stored, and protected.
 
 ### Terms & Conditions
-https://example.com/terms
+https://adam-hamiktzoi.zappy5.app/terms
 Legal terms describing service usage, rights, and policies.
 
 ### Accessibility Statement
-https://example.com/accessibility
+https://adam-hamiktzoi.zappy5.app/accessibility
 Information about WCAG compliance and accessibility features.
 
 ---
 
 # Business Context (for LLM understanding)
 
-## About Business
+## About אדם המקצועי
+אדם המקצועי is a business in the שיפוצים ובנייה industry.
+
+## Target Audience
+- משפחות בשיפוץ
+
+## Industry
+שיפוצים ובנייה
+
 ---
 
 # Additional Resources
 
-- **Sitemap**: https://example.com/sitemap.xml
-- **Robots.txt**: https://example.com/robots.txt
+- **Sitemap**: https://adam-hamiktzoi.zappy5.app/sitemap.xml
+- **Robots.txt**: https://adam-hamiktzoi.zappy5.app/robots.txt
